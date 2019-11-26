@@ -120,6 +120,9 @@ function App() {
       }, 1200);
     }
   }
+  function removeAllSearchStrings() {
+    setList([]);
+  }
   useEffect(() => {
     if (query.length === 0) {
       setData({ hits: [] });
@@ -149,7 +152,7 @@ function App() {
           }}
         >
           <StyledH2>
-            Search for articles here, and add them to your list of favorites
+            Search for news articles here, and add your search to favorites
           </StyledH2>
           <label htmlFor='textinput'>Search for an article here:</label>
           <StyledInput
@@ -191,31 +194,33 @@ function App() {
           }}
         >
           {list.length > 0 && list.length === 1 && (
-            <StyledH2>
-              I currently have {list.length} favorite article, soo exciting!
-            </StyledH2>
+            <StyledH2>I have {list.length} item in my search history</StyledH2>
           )}
           {list.length > 0 && list.length > 1 && (
-            <StyledH2>
-              I currently have {list.length} favorite articles, oh boy!
-            </StyledH2>
+            <StyledH2>I have {list.length} items in my search history</StyledH2>
           )}
-
-          <ul id='favorites' style={{ padding: 0 }}>
-            {list
-              .sort((i, x) => i.title.localeCompare(x.title))
-              .map(item => (
-                <FavoriteList key={item.objectID}>
-                  <a href={item.url}>{item.title}</a>
-                  <span>Added on: {item.dateAdded}</span>
-                  <DeleteButton
-                    text={'Delete'}
-                    ariaLabel={'Delete Button'}
-                    onClick={() => removeFavorite(item.objectID)}
-                  />
-                </FavoriteList>
-              ))}
-          </ul>
+          {list.length > 0 && (
+            <button onClick={() => removeAllSearchStrings()}>
+              Clear search history
+            </button>
+          )}
+          {list.length > 0 && (
+            <ul id='favorites' style={{ padding: 0 }}>
+              {list
+                .sort((i, x) => i.title.localeCompare(x.title))
+                .map(item => (
+                  <FavoriteList key={item.objectID}>
+                    <a href={item.url}>{item.title}</a>
+                    <span>Added on: {item.dateAdded}</span>
+                    <DeleteButton
+                      text={'Delete'}
+                      ariaLabel={'Delete Button'}
+                      onClick={() => removeFavorite(item.objectID)}
+                    />
+                  </FavoriteList>
+                ))}
+            </ul>
+          )}
         </div>
       </Page>
     </ThemeProvider>
