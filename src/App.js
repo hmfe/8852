@@ -146,6 +146,7 @@ function App() {
           <label htmlFor='textinput'>Search for an article here:</label>
           <StyledInput
             name='textinput'
+            id='textinput'
             placeholder='Type something...'
             type='text'
             value={query}
