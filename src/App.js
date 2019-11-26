@@ -132,7 +132,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Page className='App'>
-        <StyledH1>Welcome to the testpage</StyledH1>
+        <StyledH1>Welcome to the test page</StyledH1>
         <div
           style={{
             display: 'flex',
@@ -143,9 +143,10 @@ function App() {
           <StyledH2>
             Search for articles here, and add them to your list of favorites
           </StyledH2>
-
+          <label htmlFor='textinput'>Search for an article here:</label>
           <StyledInput
-            placeholder='Search for an article'
+            name='textinput'
+            placeholder='Type something...'
             type='text'
             value={query}
             onChange={event => setQuery(event.target.value)}
