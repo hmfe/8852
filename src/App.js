@@ -35,6 +35,9 @@ const FavoriteList = styled.li`
   justify-content: space-between;
   align-items: center;
   font-family: Roboto, 'Trebuchet MS', Arial, sans-serif;
+  a {
+    max-width: 33%;
+  }
   @media ${device.laptop} {
     width: 800px;
     max-width: 100%;
@@ -85,6 +88,9 @@ function App() {
 
   function removeFavorite(id) {
     const newList = list.filter(item => item.objectID !== id);
+    const updatedResults = list.filter(item => item.objectID === id);
+
+    setData({ hits: [...data.hits, updatedResults[0]] });
     setList(newList);
   }
   function addFavorite(id) {
@@ -92,6 +98,8 @@ function App() {
     const newList = data.hits.filter(item => item.objectID === id);
     const newObject = newList[0];
     newObject.dateAdded = dateAdded;
+    const updatedResults = data.hits.filter(item => item.objectID !== id);
+    setData({ hits: updatedResults });
 
     const duplicateExists = list.filter(
       item => item.objectID === newObject.objectID
@@ -161,16 +169,18 @@ function App() {
           </div>
 
           <ul style={{ padding: 0 }}>
-            {data.hits.map(item => (
-              <FavoriteList key={item.objectID} id={item.objectID}>
-                <a href={item.url}>{item.title}</a>
-                <AddButton
-                  text={'Add'}
-                  ariaLabel={'Add Button'}
-                  onClick={() => addFavorite(item.objectID)}
-                />
-              </FavoriteList>
-            ))}
+            {data.hits
+              .sort((i, x) => i.title.localeCompare(x.title))
+              .map(item => (
+                <FavoriteList key={item.objectID} id={item.objectID}>
+                  <a href={item.url}>{item.title}</a>
+                  <AddButton
+                    text={'Add'}
+                    ariaLabel={'Add Button'}
+                    onClick={() => addFavorite(item.objectID)}
+                  />
+                </FavoriteList>
+              ))}
           </ul>
         </div>
         <div
@@ -192,17 +202,19 @@ function App() {
           )}
 
           <ul id='favorites' style={{ padding: 0 }}>
-            {list.map(item => (
-              <FavoriteList key={item.objectID}>
-                <a href={item.url}>{item.title}</a>
-                <span>Added on: {item.dateAdded}</span>
-                <DeleteButton
-                  text={'Delete'}
-                  ariaLabel={'Delete Button'}
-                  onClick={() => removeFavorite(item.objectID)}
-                />
-              </FavoriteList>
-            ))}
+            {list
+              .sort((i, x) => i.title.localeCompare(x.title))
+              .map(item => (
+                <FavoriteList key={item.objectID}>
+                  <a href={item.url}>{item.title}</a>
+                  <span>Added on: {item.dateAdded}</span>
+                  <DeleteButton
+                    text={'Delete'}
+                    ariaLabel={'Delete Button'}
+                    onClick={() => removeFavorite(item.objectID)}
+                  />
+                </FavoriteList>
+              ))}
           </ul>
         </div>
       </Page>
