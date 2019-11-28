@@ -228,7 +228,9 @@ function App() {
                         </li>
                         <li style={{ textAlign: 'left' }}>
                           Matched words:{' '}
-                          {item._highlightResult.title.matchedWords}
+                          {item._highlightResult.title.matchedWords.length !== 0
+                            ? item._highlightResult.title.matchedWords
+                            : 'no matches'}
                         </li>
                         <li style={{ textAlign: 'left' }}>
                           Word match confidence:{' '}
