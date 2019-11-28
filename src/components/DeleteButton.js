@@ -11,15 +11,16 @@ const Delete = styled.button`
   border-radius: 0;
   font-size: 1rem;
   display: inline-block;
-  transition: all 0.5s;
+  transition: all 0.2s;
   text-align: left;
   vertical-align: middle;
   position: relative;
+  cursor: pointer;
   &[disabled] {
     opacity: 0.5;
   }
   &:hover {
-    opacity: 0.8;
+    transform: scale(1.1);
   }
   &::after {
     content: '\\00D7';
